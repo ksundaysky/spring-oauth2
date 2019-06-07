@@ -18,13 +18,17 @@ public class SpringOauth2Application extends WebSecurityConfigurerAdapter {
 
 	@RequestMapping("/user")
 	public Principal user(Principal principal) {
-		System.out.println("get user");
 		return principal;
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/webjars/**", "/error**").permitAll().anyRequest()
-				.authenticated()
+		http
+				.antMatcher("/**")
+					.authorizeRequests()
+				.antMatchers("/", "/login**", "/webjars/**", "/error**")
+					.permitAll()
+				.anyRequest()
+					.authenticated()
 				.and().logout().logoutSuccessUrl("/").permitAll()
 				.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
